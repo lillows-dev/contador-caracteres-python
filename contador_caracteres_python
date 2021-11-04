@@ -1,0 +1,39 @@
+frase = "Um forte indicador de que já há avanços de Democratização de Dados nas organizações é observar quantas pessoas tem acesso a Dados."
+
+import re
+import unicodedata
+
+def retirar_acento(text):
+
+    try:
+        text = unicode(text, 'utf-8')
+    except (TypeError, NameError): 
+        pass
+    text = unicodedata.normalize('NFD', text)
+    text = text.encode('ascii', 'ignore')
+    text = text.decode("utf-8")
+    return str(text)
+
+def remover_outros(text):
+    text = retirar_acento(text.lower()) # minuscula
+    text = text.strip() # retira os espaços
+    text = re.sub('[^0-9a-zA-Z_-]', '', text) #retira pontuação e números
+    return text
+
+total_letras = len(remover_outros(frase))
+
+print(remover_outros(frase))
+print("Total:", total_letras)
+
+def split(frase):
+    return list(frase)
+
+letras= split(remover_outros(frase))
+
+lista_letras = sorted(letras);
+total_por_letra = {i:lista_letras.count(i) for i in lista_letras}
+
+
+print(total_por_letra)
+
+
